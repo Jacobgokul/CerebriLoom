@@ -1,12 +1,15 @@
-
 <h1 align="center">
   <span style="color:red">Cerebri</span><span style="color:blue">Loom</span>
 </h1>
 
-CerebriLoom is an advanced platform that intertwines the power of data integration with cognitive computing, enabling users to extract meaningful insights and make data-driven decisions effectively.
+CerebriLoom is a cutting-edge platform that seamlessly integrates data analytics with cognitive computing, empowering users to derive meaningful insights and make informed, data-driven decisions.
 
 ## Features
 
 ### MindEase
 
-MindEase is a feature within CerebriLoom that acts as a mental wellbeing assistant. It utilizes AI to provide users with empathetic responses, mindfulness exercises, and emotional support, helping them navigate through their feelings and challenges in a confidential and supportive environment.
+MindEase, a pivotal component of CerebriLoom, serves as a sophisticated mental well-being assistant. Leveraging artificial intelligence, MindEase delivers empathetic responses, mindfulness exercises, and emotional support to assist users in navigating their emotions and challenges within a confidential and supportive environment.
+
+### QSync
+
+Introducing QSync, our latest feature designed to elevate your CerebriLoom experience. QSync is an intelligent query assistant proficient in answering your questions and providing comprehensive information. Going beyond text-based queries, QSync supports image uploads. Simply upload an image, inquire about its details, and QSync will furnish detailed answers based on the image content, offering a seamless and insightful interaction.
