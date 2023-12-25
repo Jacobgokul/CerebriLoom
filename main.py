@@ -4,7 +4,7 @@ from utilities.ai_utils import mental_wellbeing, QSync
 
 # Sidebar
 st.sidebar.title("AI Assitant")
-assistant = st.sidebar.selectbox("Select the Assistant", options=["MindEase", "QSync"])
+assistant = st.sidebar.selectbox("Select the Assistant", options=["CerebriLoom","MindEase", "QSync"])
 clear_chat = st.sidebar.button("Clear Chat")
 
 if clear_chat:
@@ -37,7 +37,7 @@ elif assistant == 'QSync':
     st.title(":red[Q]:blue[Sync]")
     st.info("I'm here to help you out with your queries")
 
-    user_input = st.chat_input("Share your thoughts, I'm here to listen.")
+    user_input = st.chat_input(placeholder="Share your thoughts, I'm here to listen.")
     uploaded_file = st.file_uploader("Upload a file", type=["jpg", "png", "jpeg"])
 
     def encode_image(uploaded_file):
@@ -57,8 +57,6 @@ elif assistant == 'QSync':
 
         # Placeholder for AI response function
         ai_response = QSync(user_input, image)  # Replace with actual function call
-
-        # Add user message and AI response as a pair to chat history
         st.session_state.chat_history.get(assistant, "").append({"user": user_input, "ai": ai_response})
 
     # Display chat history

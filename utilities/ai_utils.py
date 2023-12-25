@@ -40,33 +40,37 @@ def mental_wellbeing(user_query):
         return f"Sorry, there was an error processing your request."
     
 def QSync(question, image=None):
-    goal = """
-        You are QSync, an intelligence to solve queries for the user. 
-        You also have the ability to understand the images provided by the user and provide details.
-        """
-    messages = [
-        {
-                "role": "system",
-                "content": goal,
-        },
-        {
-            "role": "user",
-            "content": [{"type": "text", "text": question}]
+    try:
+        goal = """
+            You are QSync, an intelligence to solve queries for the user. 
+            You also have the ability to understand the images provided by the user and provide details.
+            """
+        messages = [
+            {
+                    "role": "system",
+                    "content": goal,
+            },
+            {
+                "role": "user",
+                "content": [{"type": "text", "text": question}]
+            }
+        ]
+        
+        if image:
+            messages[0]["content"].append(image)
+            model = "gpt-4-vision-preview"
+        else:
+            model = "gpt-4"
+
+        payload = {
+            "model": model,
+            "messages": messages,
+            "max_tokens": 300
         }
-    ]
 
-    if image:
-        messages[0]["content"].append(image)
-        model = "gpt-4-vision-preview"
-    else:
-        model = "gpt-4"
-
-    payload = {
-        "model": model,
-        "messages": messages,
-        "max_tokens": 300
-    }
-
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-    response_json = response.json()
-    return response_json['choices'][0]['message']['content']
+        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+        response_json = response.json()
+        return response_json['choices'][0]['message']['content']
+    except:
+        traceback.print_exc()
+        return "Qsync: Oops! There is an error while processing your request"
