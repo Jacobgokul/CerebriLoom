@@ -1,6 +1,7 @@
 import openai, requests
+import streamlit as st
 
-openai.api_key = api_key = "" #Replace openAI key
+openai.api_key = api_key = st.secrets["openai_key"]
 
 def mental_wellbeing(user_query):
     goal = """
