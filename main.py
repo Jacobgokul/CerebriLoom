@@ -8,11 +8,11 @@ assistant = st.sidebar.selectbox("Select the Assistant", options=["MindEase", "Q
 clear_chat = st.sidebar.button("Clear Chat")
 
 if clear_chat:
-    st.session_state.chat_history = []
+    st.session_state.chat_history[assistant] = []
 
 # Initialize session state for chat if not present
 if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
+    st.session_state.chat_history = {"MindEase": [], "QSync": []}
 
 
 if assistant == 'MindEase':
@@ -26,20 +26,16 @@ if assistant == 'MindEase':
         ai_response = mental_wellbeing(user_input)
         
         # Add user message and AI response as a pair to chat history
-        st.session_state.chat_history.append({"user": user_input, "ai": ai_response})
+        st.session_state.chat_history.get(assistant, "").append({"user": user_input, "ai": ai_response})
 
     # Display chat history
-    for message_pair in st.session_state.chat_history:
+    for message_pair in st.session_state.chat_history[assistant]:
         st.write(f"You: {message_pair['user']}")
         st.write(f"AI: {message_pair['ai']}")
 
 elif assistant == 'QSync':
     st.title(":red[Q]:blue[Sync]")
     st.info("I'm here to help you out with your queries")
-
-    # Initialize chat history if it doesn't exist
-    if 'chat_history' not in st.session_state:
-        st.session_state.chat_history = []
 
     user_input = st.chat_input("Share your thoughts, I'm here to listen.")
     uploaded_file = st.file_uploader("Upload a file", type=["jpg", "png", "jpeg"])
@@ -63,10 +59,10 @@ elif assistant == 'QSync':
         ai_response = QSync(user_input, image)  # Replace with actual function call
 
         # Add user message and AI response as a pair to chat history
-        st.session_state.chat_history.append({"user": user_input, "ai": ai_response})
+        st.session_state.chat_history.get(assistant, "").append({"user": user_input, "ai": ai_response})
 
     # Display chat history
-    for message_pair in st.session_state.chat_history:
+    for message_pair in st.session_state.chat_history[assistant]:
         st.write(f"You: {message_pair['user']}")
         st.write(f"AI: {message_pair['ai']}")
 

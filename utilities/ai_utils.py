@@ -1,5 +1,6 @@
 import openai, requests
 import streamlit as st
+import traceback
 
 openai.api_key = api_key = st.secrets["openai_key"]
 
@@ -33,15 +34,26 @@ def mental_wellbeing(user_query):
 
     try:
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-        return response['choices'][0]['message']['content']
-    except Exception as e:
-        return f"Sorry, there was an error processing your request. Error: {e}"
+        return response.json()['choices'][0]['message']['content']
+    except:
+        traceback.print_exc()
+        return f"Sorry, there was an error processing your request."
     
 def QSync(question, image=None):
-    messages = [{
-        "role": "user",
-        "content": [{"type": "text", "text": question}]
-    }]
+    goal = """
+        You are QSync, an intelligence to solve queries for the user. 
+        You also have the ability to understand the images provided by the user and provide details.
+        """
+    messages = [
+        {
+                "role": "system",
+                "content": goal,
+        },
+        {
+            "role": "user",
+            "content": [{"type": "text", "text": question}]
+        }
+    ]
 
     if image:
         messages[0]["content"].append(image)
