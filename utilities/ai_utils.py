@@ -2,7 +2,7 @@ import openai, requests
 import streamlit as st
 import traceback
 
-openai.api_key = api_key = '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'#st.secrets["openai_key"]
+openai.api_key = api_key = st.secrets["openai_key"]
 
 headers = {
         "Content-Type": "application/json",
