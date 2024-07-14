@@ -1,10 +1,9 @@
-import base64
 import streamlit as st
-from utilities.ai_utils import mental_wellbeing, QSync
+from user_interface.chatbots import display_chatbot_interface
 
 # Sidebar
-st.sidebar.title("AI Assitant")
-assistant = st.sidebar.selectbox("Select the Assistant", options=["CerebriLoom","MindEase", "QSync"])
+st.sidebar.title("AI Assistant")
+assistant = st.sidebar.selectbox("Select the Assistant", options=["CerebriLoom", "MindEase", "QSync"])
 clear_chat = st.sidebar.button("Clear Chat")
 
 if clear_chat:
@@ -12,57 +11,16 @@ if clear_chat:
 
 # Initialize session state for chat if not present
 if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = {"MindEase": [], "QSync": []}
+    st.session_state.chat_history = {"MindEase": [], "QSync": [], "CerebriLoom": []}
 
+# Secret key input
+if 'secret_key' not in st.session_state:
+    st.session_state.secret_key = ""
 
-if assistant == 'MindEase':
-    st.title(":red[Mind]:blue[Ease]")
-    st.info("Lean on me, and let's find calmness together.")
-    # User input
-    user_input = st.chat_input(placeholder="Share your thoughts, I'm here to listen.")
-    # Check if user entered a message
-    if user_input:
-        # Get AI response
-        ai_response = mental_wellbeing(user_input)
-        
-        # Add user message and AI response as a pair to chat history
-        st.session_state.chat_history.get(assistant, "").append({"user": user_input, "ai": ai_response})
+def set_secret_key():
+    st.session_state.secret_key = st.session_state.temp_secret_key
 
-    # Display chat history
-    for message_pair in st.session_state.chat_history[assistant]:
-        st.write(f"You: {message_pair['user']}")
-        st.write(f"AI: {message_pair['ai']}")
+st.sidebar.text_input("Enter Secret Key", type="password", key="temp_secret_key", on_change=set_secret_key)
 
-elif assistant == 'QSync':
-    st.title(":red[Q]:blue[Sync]")
-    st.info("I'm here to help you out with your queries")
-
-    user_input = st.chat_input(placeholder="Share your thoughts, I'm here to listen.")
-    uploaded_file = st.file_uploader("Upload a file", type=["jpg", "png", "jpeg"])
-
-    def encode_image(uploaded_file):
-        file_bytes = uploaded_file.getvalue()
-        return base64.b64encode(file_bytes).decode('utf-8')
-
-    if user_input:
-        image = None
-        if uploaded_file is not None:
-            base64_image = encode_image(uploaded_file)
-            image = {
-                "type": "image_url",
-                "image_url": {
-                    "url": f"data:image/jpeg;base64,{base64_image}"
-                }
-            }
-
-        # Placeholder for AI response function
-        ai_response = QSync(user_input, image)  # Replace with actual function call
-        st.session_state.chat_history.get(assistant, "").append({"user": user_input, "ai": ai_response})
-
-    # Display chat history
-    for message_pair in st.session_state.chat_history[assistant]:
-        st.write(f"You: {message_pair['user']}")
-        st.write(f"AI: {message_pair['ai']}")
-
-else:
-    st.header(":red[Cerebri]:blue[Loom]")
+# Display appropriate chatbot interface
+display_chatbot_interface(assistant)
