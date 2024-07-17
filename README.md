@@ -4,7 +4,7 @@
 
 CerebriLoom is a cutting-edge platform that seamlessly integrates data analytics with cognitive computing, empowering users to derive meaningful insights and make informed, data-driven decisions.
 
-## [CerebriLoom Platform](https://cerebriloom.streamlit.app/)
+## [Visit CerebriLoom](https://cerebriloom.streamlit.app/)
 
 To utilize CerebriLoom, please add your GPT-4 API key in the secret key column. Rest assured, the key provided by the user will not be stored or used beyond the current session. Once removed, the key will be permanently deleted.
 
